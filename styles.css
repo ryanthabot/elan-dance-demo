@@ -412,6 +412,7 @@ em { font-style: italic; }
   border: 1px solid var(--line-light);
   border-radius: var(--r-lg);
   padding: 2rem;
+  min-width: 0; /* let the grid item shrink so .table-scroll scrolls internally, not the page */
 }
 .pricing-block-feature {
   border: 2px solid var(--amber);
@@ -441,6 +442,13 @@ em { font-style: italic; }
   border-radius: var(--r-sm);
   vertical-align: middle;
   margin-left: 0.5rem;
+}
+
+/* Horizontal scroll container: tables wider than their card scroll
+   inside it instead of pushing the whole page sideways on mobile. */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .price-table {
@@ -582,9 +590,12 @@ em { font-style: italic; }
   align-items: center;
 }
 .about-photo {
+  width: 100%; /* definite width so auto-margin centering can't collapse the empty aspect-ratio box */
+  min-height: 280px; /* fallback if aspect-ratio is unsupported */
   aspect-ratio: 4 / 5;
   background-size: cover;
   background-position: center;
+  background-color: #1a1a1f; /* visible placeholder while the photo loads */
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-soft);
 }
@@ -908,7 +919,8 @@ em { font-style: italic; }
 
   .trust-strip { gap: 1rem 1.75rem; }
 
-  .price-table { font-size: 0.85rem; }
+  .price-table { font-size: 0.85rem; min-width: 320px; }
+  .price-table--wide { min-width: 400px; } /* 5-column tables: keep cells readable while scrolling */
   .price-table th, .price-table td { padding-inline: 0.35rem; }
 
   .promo-panel { padding: 1.75rem; }
